@@ -1,10 +1,8 @@
 import java.awt.EventQueue;
+import javax.swing.filechooser.FileFilter;
 
 import javax.swing.*;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
+
 import java.awt.Color;
 import java.awt.Dimension;
 
@@ -12,17 +10,15 @@ import javax.swing.border.LineBorder;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.SystemColor;
-import javax.swing.JTextArea;
-import javax.swing.UIManager;
-import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.awt.event.ActionEvent;
 import java.awt.Scrollbar;
 
 public class Principal extends javax.swing.JFrame{
-
+	static String SRC_PATH = "";
 	public JFrame frame;
+	
 
 	/**
 	 * Launch the application.
@@ -33,11 +29,14 @@ public class Principal extends javax.swing.JFrame{
 				try {
 					Principal window = new Principal();
 					window.frame.setVisible(true);
-					
-					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				
+						UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+					} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+							| UnsupportedLookAndFeelException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace(); 
+					}
+				
 			}
 		});
 	}
@@ -92,46 +91,118 @@ public class Principal extends javax.swing.JFrame{
 		panel.add(panelImagen);
 		panelImagen.setLayout(null);
 		
-		JButton subirImagen = new JButton("Subir Imagen");
-		subirImagen.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-	            Imagen Imagen = new Imagen();
-	            panelImagen.add(Imagen);
-	            panelImagen.repaint();
-			}
-		});
-		subirImagen.setBounds(158, 491, 116, 23);
-		panel.add(subirImagen);
+		JLabel imagen = new JLabel("");
+		imagen.setBounds(40, 11, 330, 395);
+		panelImagen.add(imagen);
 		
 		JButton Grises = new JButton("Grises");
+		Grises.setForeground(SystemColor.text);
+		Grises.setBackground(SystemColor.activeCaption);
 		Grises.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
+				JFileChooser fc =new JFileChooser();
+				fc.setDialogTitle("Buscar Imagen");
+			
+				if(fc.showOpenDialog(fc)==JFileChooser.APPROVE_OPTION) {
+					//File archivo =new File(fc.getSelectedFile().toString());
+					
+					rsscalelabel.RSScaleLabel.setScaleLabel(imagen, fc.getSelectedFile().toString());
+					System.out.println(fc.getSelectedFile().toString());
+					
+				}
 				
 				
 			}
 		});
-		Grises.setBounds(23, 11, 89, 23);
+		Grises.setBounds(23, 11, 104, 23);
 		panel.add(Grises);
 		
-		JButton btnNewButton_2 = new JButton("Tess4j");
-		btnNewButton_2.setBounds(158, 11, 89, 23);
-		panel.add(btnNewButton_2);
+		JButton bordes = new JButton("Bordes");
+		bordes.setForeground(SystemColor.text);
+		bordes.setBackground(SystemColor.activeCaption);
+		bordes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				JFileChooser fc =new JFileChooser();
+				fc.setDialogTitle("Buscar Imagen");
+			
+				if(fc.showOpenDialog(fc)==JFileChooser.APPROVE_OPTION) {
+					//File archivo =new File(fc.getSelectedFile().toString());
+					
+					rsscalelabel.RSScaleLabel.setScaleLabel(imagen, fc.getSelectedFile().toString());
+					System.out.println(fc.getSelectedFile().toString());
+					
+				}
+				
+			}
+		});
+		bordes.setBounds(251, 11, 104, 23);
+		panel.add(bordes);
+		
+		JButton subir = new JButton("Subir Imagen");
+		subir.setForeground(SystemColor.text);
+		subir.setBackground(SystemColor.activeCaption);
+		subir.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				
+				JFileChooser fc =new JFileChooser();
+				fc.setDialogTitle("Buscar Imagen");
+			
+				if(fc.showOpenDialog(fc)==JFileChooser.APPROVE_OPTION) {
+					//File archivo =new File(fc.getSelectedFile().toString());
+					
+					rsscalelabel.RSScaleLabel.setScaleLabel(imagen, fc.getSelectedFile().toString());
+					System.out.println(fc.getSelectedFile().toString());
+				}
+				
+				SRC_PATH=fc.getSelectedFile().toString();
+				reconocimientoOCR ocr= new reconocimientoOCR(SRC_PATH);
+				ocr.getReconstruccion();
+				
+			}
+			
+		});
+		subir.setBounds(137, 491, 181, 23);
+		panel.add(subir);
+		
+		JButton Umbral = new JButton("Umbral");
+		Umbral.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				JFileChooser fc =new JFileChooser();
+				fc.setDialogTitle("Buscar Imagen");
+			
+				if(fc.showOpenDialog(fc)==JFileChooser.APPROVE_OPTION) {
+					//File archivo =new File(fc.getSelectedFile().toString());
+					
+					rsscalelabel.RSScaleLabel.setScaleLabel(imagen, fc.getSelectedFile().toString());
+					SRC_PATH=fc.getSelectedFile().toString();
+					
+				}
+			}
+		});
+		Umbral.setForeground(SystemColor.text);
+		Umbral.setBackground(SystemColor.activeCaption);
+		Umbral.setBounds(137, 11, 104, 23);
+		panel.add(Umbral);
 		
 		JButton Reconstruccion = new JButton("Reconstruccion");
+		Reconstruccion.setBounds(365, 11, 73, 23);
+		panel.add(Reconstruccion);
+		Reconstruccion.setForeground(SystemColor.text);
+		Reconstruccion.setBackground(SystemColor.activeCaption);
 		Reconstruccion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				reconocimientoOCR ocr= new reconocimientoOCR();
+				reconocimientoOCR ocr= new reconocimientoOCR(SRC_PATH);
 				String result=ocr.getResultados().toString();
-				textArea.setText(result);;
+				textArea.setText(result);
 				
 				
 			}
 		});
-		Reconstruccion.setBounds(296, 11, 138, 23);
-		panel.add(Reconstruccion);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(Principal.class.getResource("/Imagenes/429165.jpg")));
@@ -139,20 +210,21 @@ public class Principal extends javax.swing.JFrame{
 		frame.getContentPane().add(lblNewLabel);
 	}
 	
-	public class Imagen extends javax.swing.JPanel {
-		 
-	    public Imagen() {
+	/*public class Imagen extends javax.swing.JPanel {
+		int indice; 
+	    public Imagen(int indice) {
 	    this.setSize(411, 435); //se selecciona el tamaño del panel
+	    this.indice=indice;
 	    }
 	    //Se crea un método cuyo parámetro debe ser un objeto Graphics
 	    public void paint(Graphics grafico) {
 	    Dimension height = getSize();
 	    //Se selecciona la imagen que tenemos en el paquete de la //ruta del programa
-	    ImageIcon Img = new ImageIcon(getClass().getResource("/Imagenes/4.jpeg")); 
+	    ImageIcon Img = new ImageIcon(getClass().getResource("/Imagenes/gray"+indice+".png")); 
 	    //se dibuja la imagen que tenemos en el paquete Images //dentro de un panel
 	    grafico.drawImage(Img.getImage(), 0, 0, height.width, height.height, null);
 	    setOpaque(false);
 	    super.paintComponent(grafico);
 	    }
-	}
+	}*/
 }

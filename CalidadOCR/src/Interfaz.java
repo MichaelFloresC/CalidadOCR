@@ -1,7 +1,9 @@
 import java.awt.EventQueue;
-
+import javax.swing.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -44,6 +46,8 @@ public class Interfaz {
 	public Interfaz() {
 		initialize();
 	}
+	
+
 
 	/**
 	 * Initialize the contents of the frame.
@@ -68,6 +72,7 @@ public class Interfaz {
 		panel.add(lblTesseractOcr);
 		
 		JButton btnNewButton = new JButton("Ingresar");
+		btnNewButton.setForeground(SystemColor.text);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -78,7 +83,7 @@ public class Interfaz {
 				
 			}
 		});
-		btnNewButton.setBackground(SystemColor.textHighlight);
+		btnNewButton.setBackground(SystemColor.activeCaption);
 		btnNewButton.setBounds(33, 251, 184, 23);
 		panel.add(btnNewButton);
 		
